@@ -1,0 +1,2 @@
+configmap:
+  message: "Hello World"
