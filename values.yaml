@@ -1,2 +1,5 @@
 configmap:
   message: "Hello World"
+service:
+    https:
+        port: 443
