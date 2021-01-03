@@ -1,5 +1,19 @@
 configmap:
-  message: "Hello World"
+    data:
+        - name: "message"
+          value: "Hello World"
+        - name: "loglevel"
+          value: "info"
+        - name: "format"
+          value: "json"
 service:
     https:
         port: 443
+    labels:
+        environment: dev
+        application: nginx
+    annotations:
+        - name: "author"
+          value: "Ahmed"
+        - name: "role"
+          value: "frontend"

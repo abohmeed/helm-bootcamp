@@ -3,4 +3,6 @@ kind: ConfigMap
 metadata:
     name: {{ .Release.Name }}-myconfigmap
 data:
-    message: "{{ .Values.configmap.message }}"
+    {{- range .Values.configmap.data}}
+    {{ $.Release.Name }}-{{ .name }}: {{ .value }}
+    {{- end }}

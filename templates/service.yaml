@@ -4,20 +4,29 @@ metadata:
     name: {{ .Release.Name }}-my-service
     {{- if .Values.service.labels}}
     labels:
-        environment: {{ .Values.service.labels.environment}}
+      {{- with .Values.service.labels }}
+        environment: {{ .environment}}
+        application: {{ .application }}
+        {{- end }}
     {{- end }}
+    annotations:
+      {{- range .Values.service.annotations }}
+      {{ .name }}: "{{ .value }}"
+      {{- end }}
 spec:
     selector:
         app: helloworld
     ports:
         {{- if .Values.service.https }}
+          {{- with .Values.service }}
         - name: https
           protocol: TCP
-          port: {{ .Values.service.https.port }}
+          port: {{ .https.port }}
           targetPort: 443
         {{- else }}
         - name: http
           protocol: TCP
-          port: {{ .Values.service.http.port }}
+          port: {{ .http.port }}
           targetPort: 80
+          {{- end }}
         {{- end }}
