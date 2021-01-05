@@ -4,5 +4,9 @@ metadata:
     name: {{ .Release.Name }}-myconfigmap
 data:
     {{- range .Values.configmap.data}}
-    {{ $.Release.Name }}-{{ .name }}: {{ .value }}
+    {{ printf "%v-%v: %v" $.Release.Name .name .value }}
     {{- end }}
+{{ printf "%v: %x%x%x" "background" 255 0 0 | indent 4}}
+    config.yaml: |
+{{ .Values.configmap.config | toYaml | indent 8 }}
+    used_ports: "{{ printf "%v,%v" .Values.service.http.port .Values.service.https.port }}"

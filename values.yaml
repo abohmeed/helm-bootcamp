@@ -6,9 +6,14 @@ configmap:
           value: "info"
         - name: "format"
           value: "json"
+    config:
+      ServerName: node001
+      RunStatus: 1
 service:
     https:
         port: 443
+    http:
+      port: 80
     labels:
         environment: dev
         application: nginx
