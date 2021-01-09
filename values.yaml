@@ -11,9 +11,9 @@ configmap:
       RunStatus: 1
 service:
     https:
-        port: 443
+      port: 
     http:
-      port: 80
+      port: 
     labels:
         environment: dev
         application: nginx

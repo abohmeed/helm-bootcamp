@@ -17,16 +17,13 @@ spec:
     selector:
         app: helloworld
     ports:
-        {{- if .Values.service.https }}
-          {{- with .Values.service }}
+       {{- with .Values.service }}
         - name: https
           protocol: TCP
-          port: {{ .https.port }}
+          port: {{ .https.port | default 443 }}
           targetPort: 443
-        {{- else }}
         - name: http
           protocol: TCP
-          port: {{ .http.port }}
+          port: {{ required "Please add a valid HTTP port" .http.port }}
           targetPort: 80
-          {{- end }}
-        {{- end }}
+       {{- end }}
