@@ -11,12 +11,14 @@ configmap:
       RunStatus: 1
 service:
     https:
-      port: 
+      port: 443
+      nodePort: 1111
     http:
-      port: 
+      port: 8080
+      nodePort: 2222
     labels:
         environment: dev
-        application: nginx
+        application: redis
     annotations:
         - name: "author"
           value: "Ahmed"

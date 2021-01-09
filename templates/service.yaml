@@ -14,16 +14,27 @@ metadata:
       {{ .name }}: "{{ .value }}"
       {{- end }}
 spec:
+    type: NodePort
     selector:
         app: helloworld
     ports:
        {{- with .Values.service }}
         - name: https
           protocol: TCP
-          port: {{ .https.port | default 443 }}
+          port: {{ .https.port }}
           targetPort: 443
+        {{- if and (ge .https.nodePort 30000.0) (le .https.nodePort 32000.0) }}
+          nodePort: {{ .https.nodePort }}
+        {{- else }}
+          nodePort: 30001
+        {{- end }}
         - name: http
           protocol: TCP
-          port: {{ required "Please add a valid HTTP port" .http.port }}
+          port: {{ .http.port }}
           targetPort: 80
+        {{- if and (ge .http.nodePort 30000.0) (le .http.nodePort 32000.0) }}
+          nodePort: {{ .http.nodePort }}
+        {{- else }}
+          nodePort: 30002
+        {{- end }}
        {{- end }}

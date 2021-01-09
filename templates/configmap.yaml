@@ -10,3 +10,6 @@ data:
     config.yaml: |
 {{ .Values.configmap.config | toYaml | indent 8 }}
     used_ports: "{{ printf "%v,%v" .Values.service.http.port .Values.service.https.port }}"
+  {{- if eq .Values.service.labels.application "nginx" }}
+    frontend: true
+  {{- end }}
